@@ -18,39 +18,57 @@ public class String_calc {
             String str = scan.nextLine().trim();
 
             if (str.contains("-")) {
-                String[] valArray = str.split("\" | \"");
-                a = valArray[0].replaceAll("\"", "");
-                b = valArray[2].replaceAll("\"", "");
-                z = valArray[1].trim();
 
-            } else {
+                String[] valArray = str.split(" - ");
+                a = valArray[0];
+                b = valArray[1];
+                z = "-";
+                if (!a.startsWith("\"") || !a.endsWith("\"") || !b.startsWith("\"") || !b.endsWith("\"") || a.length() > 12 || b.length() > 12) {
+                    throw new Exception("Ошибка ввода данных");}}
+
+            if(str.contains("+")) {
                 String[] valArray = str.split(" ");
-                a = valArray[0].replaceAll("\"", "");
-                b = valArray[2].replaceAll("\"", "");
+                a = valArray[0];
+                b = valArray[2];
                 z = valArray[1].trim();
-            }
-            if (a.length() > 10 || b.length() > 10) {
-                throw new Exception("Ошибка ввода данных");
-            }
+                if (!a.startsWith("\"") || !a.endsWith("\"") || !b.startsWith("\"") || !b.endsWith("\"") || a.length() > 12 || b.length() > 12) {
+                    throw new Exception("Ошибка ввода данных");}}
+
+                if(str.contains("*")) {
+                    String[] valArray = str.split(" ");
+                    a = valArray[0];
+                    b = valArray[2];
+                    z = valArray[1].trim();
+                if (!a.startsWith("\"") || !a.endsWith("\"") || b.startsWith("\"") || b.endsWith("\"") || a.length() > 12 || b.length() > 12) {
+                throw new Exception("Ошибка ввода данных");}}
+
+                if(str.contains("/")) {
+                String[] valArray = str.split(" ");
+                a = valArray[0];
+                b = valArray[2];
+                z = valArray[1].trim();
+                if (!a.startsWith("\"") || !a.endsWith("\"") || b.startsWith("\"") || b.endsWith("\"") || a.length() > 12 || b.length() > 12) {
+                    throw new Exception("Ошибка ввода данных");}}
         }
+
     }
     static class Operations extends Reader {
         static String c;
         static void ops() throws Exception {
                 switch (z) {
-                    case "+": c = a + b; break;
+                    case "+": c = a.replaceAll("\"", "") + b.replaceAll("\"", ""); break;
                     case "*":
                         if (b.matches("^[0-9]+$") && Integer.parseInt(b) >10) {
                             throw new Exception("Ошибка ввода данных");}
                         int x = Integer.parseInt(b);
-                        c = a.repeat(x); break;
+                        c = a.replaceAll("\"","").repeat(x); break;
                     case "/":
                         if (b.matches("^[0-9]+$") && Integer.parseInt(b) >10) {
                             throw new Exception("Ошибка ввода данных"); }
-                        int y = a.length() / Integer.parseInt(b);
-                        c = a.substring(0, y); break;
+                        int y = a.replaceAll("\"","").length() / Integer.parseInt(b);
+                        c = a.replaceAll("\"","").substring(0, y); break;
                     case "-":
-                        c = a.replace(b, "").trim(); break;
+                        c = a.replaceAll("\"","").replace(b.replaceAll("\"",""), "").trim(); break;
                 }
                 System.out.println("Output:");
                 if (c.length()>40) {
